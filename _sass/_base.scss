@@ -8,6 +8,10 @@ body {
   font-family: "Fira Sans", sans-serif;
 }
 
+main {
+  margin-top: $header-height;
+}
+
 .mobile {
   display: none;
   visibility: hidden;

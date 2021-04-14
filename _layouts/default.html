@@ -3,8 +3,11 @@
   {%- include head.html -%}
   <body class="{{ page.title | slugify }}">
     {%- include header.html -%}
-    {{ content }}
 
+    <main>
+      {{ content }}
+    </main>
+    
     {%- include modal.html -%}
   </body>
 </html>
