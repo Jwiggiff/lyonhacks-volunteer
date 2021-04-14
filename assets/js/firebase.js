@@ -1,6 +1,7 @@
 export let db;
+export let storageRef;
 
-function initializeInstance() {
+export function initializeInstance() {
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   var firebaseConfig = {
@@ -16,6 +17,9 @@ function initializeInstance() {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
   db = firebase.firestore();
+
+  var storage = firebase.storage();
+  storageRef = storage.ref();
 }
 
 export function registerVolunteer(age, email, password, firstName, lastName, interests, location, timeCommitment, timeFrame) {
@@ -24,6 +28,21 @@ export function registerVolunteer(age, email, password, firstName, lastName, int
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       let user = userCredential.user;
+
+      user.sendEmailVerification().then(function() {
+		// Email sent.
+		}).catch(function(error) {
+		// An error happened.
+	  });
+
+
+		user.updateProfile({
+		  displayName: firstName+" "+lastName,
+		}).then(function() {
+		  // Update successful.
+		}).catch(function(error) {
+		  // An error happened.
+		});
 
       db.collection("volunteers")
         .doc(user.uid)
@@ -37,9 +56,6 @@ export function registerVolunteer(age, email, password, firstName, lastName, int
           timeCommitment: timeCommitment,
           timeFrame: timeFrame
         })
-        .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
-        })
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
@@ -47,15 +63,6 @@ export function registerVolunteer(age, email, password, firstName, lastName, int
     .catch((error) => {
       console.error(err.code, err.message);
     });
-
-    //send verification email
-    var user = firebase.auth().currentUser;
-
-	user.sendEmailVerification().then(function() {
-	// Email sent.
-	}).catch(function(error) {
-	// An error happened.
-	});
 }
 
 export function registerOrganization(email, password, website, location, fields, description, logo, bg_img, phoneNumber) {
@@ -65,12 +72,27 @@ export function registerOrganization(email, password, website, location, fields,
 	.then((userCredential) => {
 		let user = userCredential.user;
 
+		user.sendEmailVerification().then(function() {
+			// Email sent.
+			}).catch(function(error) {
+			// An error happened.
+	  	});
+
+		user.updateProfile({
+		  displayName: name,
+		}).then(function() {
+		  // Update successful.
+		}).catch(function(error) {
+		  // An error happened.
+		});
+
 		db.collection("organizations")
 			.doc(user.uid)
 			.set({
+				name: name,
 				email: email,
 				website: website,
-				location: location
+				location: location,
 				phone: phoneNumber
 			})
 			.then((docRef) => {
@@ -83,21 +105,48 @@ export function registerOrganization(email, password, website, location, fields,
 		.catch((error) => {
 			console.error(err.code, err.message);
 		});
+
+		var imagesRef = storageRef.child(name);
+
+		var fileName = "logo"+logo.type.split("/")[1]
+
+		var spaceRef = imagesRef.child(fileName)
+
+		var path = spaceRef.fullPath;
+
+		var name = spaceRef.name;
+
+		var imagesRef = spaceRef.parent;
 }
 
-export function registerSchool(email, password, website, location, phoneNumber) {
+export function registerSchool(name, email, password, website, location, phoneNumber) {
 	firebase
 	.auth()
 	.createUserWithEmailAndPassword(email, password)
 	.then((userCredential) => {
 		let user = userCredential.user;
 
+		user.sendEmailVerification().then(function() {
+			// Email sent.
+			}).catch(function(error) {
+			// An error happened.
+	  	});
+
+		user.updateProfile({
+		  displayName: name,
+		}).then(function() {
+		  // Update successful.
+		}).catch(function(error) {
+		  // An error happened.
+		});
+
 		db.collection("school")
 			.doc(user.uid)
 			.set({
+				name: name,
 				email: email,
 				website: website,
-				location: location
+				location: location,
 				phone: phoneNumber
 			})
 			.then((docRef) => {
