@@ -1,4 +1,4 @@
-let db;
+export let db;
 
 function initializeInstance() {
   // Your web app's Firebase configuration
