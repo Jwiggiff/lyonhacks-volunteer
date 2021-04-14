@@ -176,4 +176,13 @@ export function login(email, password)
   });
 }
 
+export function logout()
+{
+	firebase.auth().signOut().then(() => {
+  		// Sign-out successful.
+	}).catch((error) => {
+  		// An error happened.
+	});
+}
+
 initializeInstance();
