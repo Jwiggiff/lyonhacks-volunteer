@@ -1,0 +1,26 @@
+.register {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 10rem;
+
+  .title {
+    padding: 2rem;
+    border-bottom: 1px solid black;
+    width: 100%;
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      font-weight: normal;
+    }
+  }
+
+  form {
+    padding: 1rem 0;
+    width: 50%;
+  }
+}

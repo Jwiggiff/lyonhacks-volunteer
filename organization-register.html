@@ -3,3 +3,56 @@ layout: default
 title: Register as an Organization
 permalink: /organization-register/
 ---
+
+<section class="register">
+  <div class="title">
+    <h1>Welcome!</h1>
+    <h3>Join us today to find the right volunteers for your organization.</h3>
+  </div>
+
+  <form id="orgRegisterForm">
+    <div class="input-group">
+      <label for="name">Organization name: *</label>
+      <input type="text" id="name" required />
+    </div>
+    <div class="input-group">
+      <label for="email">Organization contact email: *</label>
+      <input type="text" id="email" required />
+    </div>
+    <div class="input-group">
+      <label for="p_code">Postal code: *</label>
+      <input type="text" id="p_code" required />
+    </div>
+    <div class="input-group">
+      <label for="fields">Field(s) of work: *</label>
+      <sub>Tip: Hold Ctrl to select multiple fields.</sub>
+      <select id="fields" multiple required>
+        <option value="field">Field</option>
+        <option value="field">Field</option>
+        <option value="field">Field</option>
+        <option value="field">Field</option>
+        <option value="field">Field</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="desc">Description: *</label>
+      <textarea id="desc" cols="30" rows="10" required></textarea>
+    </div>
+    <div class="input-group">
+      <label for="logo">Upload your organization logo here: *</label>
+      <input type="file" id="logo" required />
+    </div>
+    <div class="input-group">
+      <label for="bg_img">Upload a background image here:</label>
+      <sub
+        >We strongly recommend uploading a background image for your
+        organization's page. This gives a personal touch to your page and can
+        help attract more volunteers.</sub
+      >
+      <input type="file" id="bg_img" />
+    </div>
+    <div class="input-group">
+      <button class="btn">Register</button>
+    </div>
+  </form>
+</section>
