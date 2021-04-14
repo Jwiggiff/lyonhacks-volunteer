@@ -47,6 +47,15 @@ export function registerVolunteer(age, email, password, firstName, lastName, int
     .catch((error) => {
       console.error(err.code, err.message);
     });
+
+    //send verification email
+    var user = firebase.auth().currentUser;
+
+	user.sendEmailVerification().then(function() {
+	// Email sent.
+	}).catch(function(error) {
+	// An error happened.
+	});
 }
 
 export function registerOrganization(email, password, website, location, fields, description, logo, bg_img, phoneNumber) {
