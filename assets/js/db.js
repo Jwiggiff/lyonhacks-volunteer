@@ -1,6 +1,6 @@
 import { db } from './firebase.js'
 
-function getVolunteers() {
+export function getVolunteers() {
     let volunteerData = {}
 
     db.collection("Volunteer").get().then((querySnapshot) => {
@@ -22,7 +22,7 @@ function getVolunteers() {
     return volunteerData
 }
 
-function getOrganizations() {
+export function getOrganizations() {
     let organizationData = {}
 
     db.collection('Organization').get().then((querySnapshot) => {
@@ -44,7 +44,7 @@ function getOrganizations() {
     return organizationData
 }
 
-function getSchools() {
+export function getSchools() {
     let schoolData = {}
 
     db.collection('School').get().then((querySnapshot) => {
@@ -65,7 +65,7 @@ function getSchools() {
     return schoolData
 }
 
-function queryOpportunities(query) {
+export function queryOpportunities(query) {
     let list = {}
     db.collection('Organization').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -92,10 +92,6 @@ function queryOpportunities(query) {
     })
 
     return list
-}
-
-queryOrgs(query) {
-    return db.collection("Organization").where("tags", "array-contains", `${query}`).get()
 }
 
 
