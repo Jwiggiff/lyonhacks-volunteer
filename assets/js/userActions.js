@@ -15,7 +15,7 @@ function addExperience(experience, position)
 }
 
 
-function editExperience(experience, position , id)
+function editExperience(experience, position, id)
 {
 	.doc(firebase.auth().currentUser.uid)
         .collection("experience")
