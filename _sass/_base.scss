@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Fira Sans", sans-serif;
+}
+
+.mobile {
+  display: none;
+  visibility: hidden;
+}
+
+@include media-query($on-palm) {
+  .mobile {
+    display: block;
+    visibility: visible;
+  }
+}
