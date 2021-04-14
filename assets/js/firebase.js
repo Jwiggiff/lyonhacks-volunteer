@@ -18,7 +18,7 @@ function initializeInstance() {
   db = firebase.firestore();
 }
 
-function registerVolunteer(age, email, password, firstName, lastName, interests, location, timeCommitment, timeFrame) {
+export function registerVolunteer(age, email, password, firstName, lastName, interests, location, timeCommitment, timeFrame) {
 	firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -49,7 +49,7 @@ function registerVolunteer(age, email, password, firstName, lastName, interests,
     });
 }
 
-function registerOrganization(email, password, website, location) {
+export function registerOrganization(email, password, website, location, fields, description, logo, bg_img) {
 	firebase
 	.auth()
 	.createUserWithEmailAndPassword(email, password)
@@ -75,7 +75,7 @@ function registerOrganization(email, password, website, location) {
 		});
 }
 
-function registerSchool(email, password, website, location) {
+export function registerSchool(email, password, website, location) {
 	firebase
 	.auth()
 	.createUserWithEmailAndPassword(email, password)
@@ -102,7 +102,7 @@ function registerSchool(email, password, website, location) {
 }
 
 
-function login(email, password)
+export function login(email, password)
 {
 	firebase.auth().signInWithEmailAndPassword(email, password)
 	.then((userCredential) => {
