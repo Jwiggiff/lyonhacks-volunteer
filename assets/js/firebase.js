@@ -49,7 +49,7 @@ export function registerVolunteer(age, email, password, firstName, lastName, int
     });
 }
 
-export function registerOrganization(email, password, website, location, fields, description, logo, bg_img) {
+export function registerOrganization(email, password, website, location, fields, description, logo, bg_img, phoneNumber) {
 	firebase
 	.auth()
 	.createUserWithEmailAndPassword(email, password)
@@ -62,6 +62,7 @@ export function registerOrganization(email, password, website, location, fields,
 				email: email,
 				website: website,
 				location: location
+				phone: phoneNumber
 			})
 			.then((docRef) => {
 				console.log("Document written with ID: ", docRef.id);
@@ -75,7 +76,7 @@ export function registerOrganization(email, password, website, location, fields,
 		});
 }
 
-export function registerSchool(email, password, website, location) {
+export function registerSchool(email, password, website, location, phoneNumber) {
 	firebase
 	.auth()
 	.createUserWithEmailAndPassword(email, password)
@@ -88,6 +89,7 @@ export function registerSchool(email, password, website, location) {
 				email: email,
 				website: website,
 				location: location
+				phone: phoneNumber
 			})
 			.then((docRef) => {
 				console.log("Document written with ID: ", docRef.id);
