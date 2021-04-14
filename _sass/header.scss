@@ -59,12 +59,6 @@
       }
     }
   }
-
-  .btn {
-    padding: 0.25rem 0.5rem;
-    border-radius: 8px;
-    background-color: $lightblue;
-  }
 }
 
 @include media-query($on-palm) {
