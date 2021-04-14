@@ -55,4 +55,13 @@
     font-size: 1em;
     cursor: pointer;
   }
+
+  .errormsg {
+    color: red;
+    margin-top: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 200px;
+    line-height: 1;
+  }
 }

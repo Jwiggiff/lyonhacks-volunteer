@@ -1,12 +1,10 @@
 .hero {
   display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: flex-end;
-  text-align: right;
+  justify-content: flex-end;
+  align-items: center;
   padding: 4rem 6rem;
   width: 100%;
-  height: calc(100vh - #{$header-height});
+  min-height: calc(100vh - #{$header-height});
   margin-top: $header-height;
   position: relative;
 
@@ -21,19 +19,43 @@
     z-index: -1;
   }
 
+  .hero-content {
+    width: 50%;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    background-color: rgba($white, 0.7);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: right;
+  }
+
   .hero-title {
     font-size: 3em;
   }
 
   .hero-paragraph {
-    width: 40%;
+    margin-bottom: 2rem;
+  }
+
+  .definition {
+    font-family: serif;
+    font-size: 1.1em;
   }
 
   @include media-query($on-palm) {
     padding: 1rem 2rem;
+    flex-flow: column;
     justify-content: start;
     text-align: center;
     background-image: linear-gradient(45deg, $lightblue, $white);
+
+    .hero-content {
+      width: auto;
+      background: none;
+      text-align: left;
+    }
 
     .bg-img {
       position: static;
@@ -78,7 +100,11 @@
     .testimony {
       border-radius: 8px;
       padding: 1rem 2rem;
-      background-image: linear-gradient(45deg, $lightblue, lighten($lightblue, 15%));
+      background-image: linear-gradient(
+        45deg,
+        $lightblue,
+        lighten($lightblue, 15%)
+      );
 
       span {
         display: block;
