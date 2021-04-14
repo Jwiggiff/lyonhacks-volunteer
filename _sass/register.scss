@@ -23,4 +23,12 @@
     padding: 1rem 0;
     width: 50%;
   }
+
+  @include media-query($on-palm) {
+    margin: 0 2rem;
+
+    form {
+      width: 100%;
+    }
+  }
 }

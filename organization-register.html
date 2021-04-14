@@ -20,18 +20,29 @@ permalink: /organization-register/
       <input type="text" id="email" required />
     </div>
     <div class="input-group">
-      <label for="p_code">Postal code: *</label>
-      <input type="text" id="p_code" required />
+      <label for="phone">Organization contact phone number: *</label>
+      <input type="text" id="phone" required />
+    </div>
+    <div class="input-group">
+      <label for="addr">Address: *</label>
+      <input type="text" id="addr" required />
+    </div>
+    <div class="input-group">
+      <label for="website">Website:</label>
+      <input type="text" id="website" />
     </div>
     <div class="input-group">
       <label for="fields">Field(s) of work: *</label>
       <sub>Tip: Hold Ctrl to select multiple fields.</sub>
       <select id="fields" multiple required>
-        <option value="field">Field</option>
-        <option value="field">Field</option>
-        <option value="field">Field</option>
-        <option value="field">Field</option>
-        <option value="field">Field</option>
+        <option value="healthcare">Healthcare</option>
+        <option value="education">Education</option>
+        <option value="animals">Animals</option>
+        <option value="community">Community</option>
+        <option value="office">Office</option>
+        <option value="childcare">Childcare</option>
+        <option value="elderly">Elderly</option> care
+        <option value="humanitarian">Humanitarian</option>
       </select>
     </div>
     <div class="input-group">
@@ -40,7 +51,7 @@ permalink: /organization-register/
     </div>
     <div class="input-group">
       <label for="logo">Upload your organization logo here: *</label>
-      <input type="file" id="logo" required />
+      <input type="file" id="logo" accept="image/*" required />
     </div>
     <div class="input-group">
       <label for="bg_img">Upload a background image here:</label>
@@ -49,7 +60,7 @@ permalink: /organization-register/
         organization's page. This gives a personal touch to your page and can
         help attract more volunteers.</sub
       >
-      <input type="file" id="bg_img" />
+      <input type="file" id="bg_img" accept="image/*" />
     </div>
     <div class="input-group">
       <button class="btn">Register</button>

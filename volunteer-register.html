@@ -15,7 +15,7 @@ permalink: /volunteer-register/
   <form id="volunteerRegisterForm">
     <div class="input-group">
       <label for="f_name">First name: *</label>
-      <input type="text" id="f_name" required />
+      <input name="f_name" type="text" id="f_name" required />
     </div>
     <div class="input-group">
       <label for="l_name">Last name: *</label>
@@ -37,11 +37,14 @@ permalink: /volunteer-register/
       <label for="interests">Interests: *</label>
       <sub>Tip: Hold Ctrl to select multiple interests.</sub>
       <select id="interests" multiple required>
-        <option value="interest">Interest</option>
-        <option value="interest">Interest</option>
-        <option value="interest">Interest</option>
-        <option value="interest">Interest</option>
-        <option value="interest">Interest</option>
+        <option value="healthcare">Healthcare</option>
+        <option value="education">Education</option>
+        <option value="animals">Animals</option>
+        <option value="community">Community</option>
+        <option value="office">Office</option>
+        <option value="childcare">Childcare</option>
+        <option value="elderly">Elderly</option> care
+        <option value="humanitarian">Humanitarian</option>
       </select>
     </div>
     <div class="input-group">
@@ -74,6 +77,7 @@ permalink: /volunteer-register/
         below:</label
       >
       <select id="school">
+        <option value="" disabled selected>Select an Option...</option>
         <option value="wlmac">William Lyon Mackenzie C.I.</option>
       </select>
     </div>
