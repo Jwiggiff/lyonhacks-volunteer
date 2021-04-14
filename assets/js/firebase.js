@@ -18,7 +18,7 @@ function initializeInstance() {
   db = firebase.firestore();
 }
 
-function registerVolunteer(age, email, firstName, lastName, interests, location, timeCommitment, timeFrame) {
+function registerVolunteer(age, email, password, firstName, lastName, interests, location, timeCommitment, timeFrame) {
 	firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -30,12 +30,12 @@ function registerVolunteer(age, email, firstName, lastName, interests, location,
         .set({
           age: age,
           email: email,
-					firstName: firstName,
-					lastName: lastName,
+		  firstName: firstName,
+		  lastName: lastName,
           interests: interests,
           location: location,
           timeCommitment: timeCommitment,
-          timeFrame: timeFrame,
+          timeFrame: timeFrame
         })
         .then((docRef) => {
           console.log("Document written with ID: ", docRef.id);
@@ -48,5 +48,34 @@ function registerVolunteer(age, email, firstName, lastName, interests, location,
       console.error(err.code, err.message);
     });
 }
+
+function registerOrganization(email, password, website, location) {
+	firebase
+	.auth()
+	.createUserWithEmailAndPassword(email, password)
+	.then((userCredential) => {
+		let user = userCredential.user;
+
+		db.collection("organizations")
+			.doc(user.uid)
+			.set({
+				email: email,
+				website: website,
+				location: location
+			})
+			.then((docRef) => {
+				console.log("Document written with ID: ", docRef.id);
+			})
+			.catch((error) => {
+				console.error("Error adding document: ", error);
+			});
+		})
+		.catch((error) => {
+			console.error(err.code, err.message);
+		});
+}
+
+
+function login(email, password)
 
 initializeInstance();
