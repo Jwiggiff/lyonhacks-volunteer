@@ -17,7 +17,8 @@ function addExperience(experience, position)
 
 function editExperience(experience, position, id)
 {
-	.doc(firebase.auth().currentUser.uid)
+    db.collection("volunteers")
+	      .doc(firebase.auth().currentUser.uid)
         .collection("experience")
         .doc(id)
         .set({
@@ -32,7 +33,8 @@ function editExperience(experience, position, id)
 
 function deleteExperience(id)
 {
-	.doc(firebase.auth().currentUser.uid)
+  db.collection("volunteers")
+	      .doc(firebase.auth().currentUser.uid)
         .collection("experience")
         .doc(id).delete().then(() => {
     		console.log("Document successfully deleted!");
