@@ -9,7 +9,7 @@ function addExperience(description, location, name, visibility)
           description: description,
           location: location,
           name: name,
-          visibility
+          visibility: visibility
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
@@ -24,8 +24,10 @@ function editExperience(description, location, name, visibility, id)
         .collection("opportunities")
         .doc(id)
         .set({
-          experience: experience,
-          position: position
+          description: description,
+          location: location,
+          name: name,
+          visibility: visibility
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
