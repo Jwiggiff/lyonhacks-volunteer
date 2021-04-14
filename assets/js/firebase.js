@@ -1,5 +1,6 @@
 export let db;
 export let storageRef;
+export let type;
 
 function initializeInstance() {
   // Your web app's Firebase configuration
@@ -185,7 +186,7 @@ export function registerSchool(
       }
 
       promises.push(
-        db.collection("school").doc(user.uid).set({
+        db.collection("schools").doc(user.uid).set({
           name: name,
           email: email,
           website: website,
@@ -211,6 +212,17 @@ export function login(email, password) {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
+    .then(async (userCredential) => {
+      let uid = userCredential.user.uid;
+
+      if ((await db.collection("volunteers").doc(uid).get()).exists)
+        window.userType = "volunteer";
+      else if ((await db.collection("organizations").doc(uid).get()).exists)
+        window.userType = "organization";
+      else if ((await db.collection("schools").doc(uid).get()).exists)
+        window.userType = "school";
+      else console.log("Something's wrong...");
+    })
     .catch((error) => {
       console.error(error.code, error.message);
     });
@@ -229,3 +241,23 @@ export function logout() {
 }
 
 initializeInstance();
+
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (user) {
+    let uid = user.uid;
+
+    if ((await db.collection("volunteers").doc(uid).get()).exists) {
+      window.userType = "volunteer";
+    } else if ((await db.collection("organizations").doc(uid).get()).exists) {
+      window.userType = "organization";
+    } else if ((await db.collection("schools").doc(uid).get()).exists) {
+      window.userType = "school";
+    } else {
+      console.log("Something's wrong...");
+    }
+
+    if (window.location.pathname == "/")
+      if (userType == "volunteer") window.location = "/dashboard/";
+      else window.location = "/our-opportunities/";
+  }
+});

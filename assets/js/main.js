@@ -14,8 +14,8 @@ function registerEvents() {
 
   loginForm?.addEventListener("submit", (e) => {
     e.preventDefault();
-    let email = e.target.querySelector("#email");
-    let pasword = e.target.querySelector("#password");
+    let email = e.target.querySelector("#email").value;
+    let password = e.target.querySelector("#password").value;
 
     login(email, password);
   });
@@ -34,7 +34,6 @@ function registerEvents() {
     let timeCommitment = e.target.querySelector("#time_commitment").value;
     // let hideEmail = e.target.querySelector("#hide_email").checked;
     let school = e.target.querySelector("#school").value;
-
 
     registerVolunteer(
       age,
