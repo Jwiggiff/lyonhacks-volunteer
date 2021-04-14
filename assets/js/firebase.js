@@ -75,6 +75,32 @@ function registerOrganization(email, password, website, location) {
 		});
 }
 
+function registerSchool(email, password, website, location) {
+	firebase
+	.auth()
+	.createUserWithEmailAndPassword(email, password)
+	.then((userCredential) => {
+		let user = userCredential.user;
+
+		db.collection("school")
+			.doc(user.uid)
+			.set({
+				email: email,
+				website: website,
+				location: location
+			})
+			.then((docRef) => {
+				console.log("Document written with ID: ", docRef.id);
+			})
+			.catch((error) => {
+				console.error("Error adding document: ", error);
+			});
+		})
+		.catch((error) => {
+			console.error(err.code, err.message);
+		});
+}
+
 
 function login(email, password)
 
