@@ -31,7 +31,8 @@ export function registerVolunteer(
   interests,
   postalCode,
   timeCommitment,
-  timeFrame
+  timeFrame,
+  school
 ) {
   firebase
     .auth()
@@ -62,6 +63,10 @@ export function registerVolunteer(
           postalCode: postalCode,
           timeCommitment: timeCommitment,
           timeFrame: timeFrame,
+          school: school,
+        })
+        .then(() => {
+          window.location = "/dashboard/";
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
@@ -84,9 +89,6 @@ export function registerOrganization(
   bg_img,
   phoneNumber
 ) {
-  var fileName = "logo." + logo.type.split("/")[1];
-  console.log(name + "/" + fileName);
-
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -105,31 +107,36 @@ export function registerOrganization(
           console.error(error.code, error.message);
         });
 
+      let promises = [];
+
       let logoName = "logo." + logo.type.split("/")[1];
       let logoRef = storageRef.child(name + "/" + logoName);
-      logoRef.put(logo).catch((error) => {
-        console.error(error.code, error.message);
-      });
+      promises.push(logoRef.put(logo));
 
       if (bg_img) {
         let bgName = "background." + bg_img.type.split("/")[1];
         let bgRef = storageRef.child(name + "/" + bgName);
-        bgRef.put(bg_img).catch((error) => {
-          console.error(error.code, error.message);
-        });
+        promises.push(bgRef.put(bg_img));
       }
 
-      db.collection("organizations")
-        .doc(user.uid)
-        .set({
+      promises.push(
+        db.collection("organizations").doc(user.uid).set({
           name: name,
           email: email,
           website: website,
           location: location,
           phone: phoneNumber,
+          fields: fields,
+          description: description,
+        })
+      );
+
+      Promise.all(promises)
+        .then(() => {
+          window.location = "/our-opportunities/";
         })
         .catch((error) => {
-          console.error("Error adding document: ", error);
+          console.error(error.code, error.message);
         });
     })
     .catch((error) => {
@@ -153,9 +160,9 @@ export function registerSchool(
     .then((userCredential) => {
       let user = userCredential.user;
 
-      user.sendEmailVerification().catch(function (error) {
-        console.error(error.code, error.message);
-      });
+      // user.sendEmailVerification().catch(function (error) {
+      //   console.error(error.code, error.message);
+      // });
 
       user
         .updateProfile({
@@ -165,31 +172,34 @@ export function registerSchool(
           console.error(error.code, error.message);
         });
 
+      let promises = [];
+
       let logoName = "logo." + logo.type.split("/")[1];
       let logoRef = storageRef.child(name + "/" + logoName);
-      logoRef.put(logo).catch((error) => {
-        console.error(error.code, error.message);
-      });
+      promises.push(logoRef.put(logo));
 
       if (bg_img) {
         let bgName = "background." + bg_img.type.split("/")[1];
         let bgRef = storageRef.child(name + "/" + bgName);
-        bgRef.put(bg_img).catch((error) => {
-          console.error(error.code, error.message);
-        });
+        promises.push(bgRef.put(bg_img));
       }
 
-      db.collection("school")
-        .doc(user.uid)
-        .set({
+      promises.push(
+        db.collection("school").doc(user.uid).set({
           name: name,
           email: email,
           website: website,
           location: location,
           phone: phoneNumber,
         })
+      );
+
+      Promise.all(promises)
+        .then(() => {
+          window.location = "/our-opportunities/";
+        })
         .catch((error) => {
-          console.error("Error adding document: ", error);
+          console.error(error.code, error.message);
         });
     })
     .catch((error) => {

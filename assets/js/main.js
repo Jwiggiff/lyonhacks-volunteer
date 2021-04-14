@@ -32,8 +32,9 @@ function registerEvents() {
     ).map((el) => el.value);
     let timeFrame = e.target.querySelector("#time_frame").value;
     let timeCommitment = e.target.querySelector("#time_commitment").value;
-    let hideEmail = e.target.querySelector("#hide_email").checked;
+    // let hideEmail = e.target.querySelector("#hide_email").checked;
     let school = e.target.querySelector("#school").value;
+
 
     registerVolunteer(
       age,
@@ -44,7 +45,8 @@ function registerEvents() {
       interests,
       postalCode,
       timeCommitment,
-      timeFrame
+      timeFrame,
+      school
     );
   });
   orgForm?.addEventListener("submit", (e) => {
