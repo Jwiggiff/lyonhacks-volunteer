@@ -65,16 +65,30 @@
     }
   }
 
+  img {
+    height: 10rem;
+  }
+
   p {
     margin-top: 2rem;
   }
 
-  .input-group:last-of-type a {
-    padding: 0 1rem;
-    margin-top: 1rem;
+  .input-group:last-of-type {
+    a {
+      padding: 0 1rem;
+      margin-top: 1rem;
 
-    &:not(:last-of-type) {
-      border-right: 1px solid grey;
+      &:not(:last-of-type) {
+        border-right: 1px solid grey;
+      }
+    }
+
+    @include media-query($on-palm) {
+      flex-flow: column;
+
+      a:not(:last-of-type) {
+        border: none;
+      }
     }
   }
 
