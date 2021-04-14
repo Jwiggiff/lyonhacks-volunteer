@@ -1,0 +1,58 @@
+.input-group {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  &.horizontal {
+    flex-flow: row;
+    align-items: center;
+    text-align: left;
+
+    label {
+      flex: 1;
+    }
+
+    input {
+      flex: 0 2rem;
+    }
+  }
+
+  input, select, textarea {
+    outline: none;
+    border: none;
+    margin: 0.5rem 0;
+    background-color: #e5e5e5;
+    padding: 0.25rem 0.5rem;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+
+    &::placeholder {
+      transform-origin: 0 0;
+      transition: all 0.2s ease;
+    }
+
+    &:focus {
+      border: 2px solid $lightblue;
+
+      &::placeholder {
+        transform: scale(0.75);
+      }
+    }
+  }
+
+  sub {
+    color: grey;
+    font-size: 0.75em;
+    text-align: left;
+  }
+
+  button {
+    place-self: center;
+    width: 50%;
+    padding: 1rem;
+    font-size: 1em;
+    cursor: pointer;
+  }
+}

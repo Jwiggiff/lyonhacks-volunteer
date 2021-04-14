@@ -3,3 +3,82 @@ layout: default
 title: Register as a Volunteer
 permalink: /volunteer-register/
 ---
+
+<section class="register">
+  <div class="title">
+    <h1>Welcome!</h1>
+    <h3>
+      Join us today to make your next volunteer position your best one yet.
+    </h3>
+  </div>
+
+  <form id="volunteerRegisterForm">
+    <div class="input-group">
+      <label for="f_name">First name: *</label>
+      <input type="text" id="f_name" required />
+    </div>
+    <div class="input-group">
+      <label for="l_name">Last name: *</label>
+      <input type="text" id="l_name" required />
+    </div>
+    <div class="input-group">
+      <label for="email">Email: *</label>
+      <input type="text" id="email" required />
+    </div>
+    <div class="input-group">
+      <label for="age">Age: *</label>
+      <input type="number" id="age" min="0" max="99" required />
+    </div>
+    <div class="input-group">
+      <label for="p_code">Postal code: *</label>
+      <input type="text" id="p_code" required />
+    </div>
+    <div class="input-group">
+      <label for="interests">Interests: *</label>
+      <sub>Tip: Hold Ctrl to select multiple interests.</sub>
+      <select id="interests" multiple required>
+        <option value="interest">Interest</option>
+        <option value="interest">Interest</option>
+        <option value="interest">Interest</option>
+        <option value="interest">Interest</option>
+        <option value="interest">Interest</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="time_frame">Time frame: *</label>
+      <select id="time_frame" required>
+        <option value="" disabled selected>Select an Option...</option>
+        <option value="long-term">Long Term</option>
+        <option value="short-term">Short Term</option>
+        <option value="one-time">One Time</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="time_commitment">Time commitment: *</label>
+      <select id="time_commitment" required>
+        <option value="" disabled selected>Select an Option...</option>
+        <option value="weekly">Once a Week</option>
+        <option value="daily">Daily</option>
+        <option value="biweekly">Multiple Times a Week</option>
+      </select>
+    </div>
+    <div class="input-group horizontal">
+      <label for="hide_email"
+        >Hide email from organizations (used to contact you)?</label
+      >
+      <input type="checkbox" id="hide_email" />
+    </div>
+    <div class="input-group">
+      <label for="school"
+        >If you are a student, select your school/institution from the list
+        below:</label
+      >
+      <select id="school">
+        <option value="wlmac">William Lyon Mackenzie C.I.</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <button class="btn">Register</button>
+    </div>
+  </form>
+</section>
