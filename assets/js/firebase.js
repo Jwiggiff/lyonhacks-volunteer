@@ -22,167 +22,210 @@ function initializeInstance() {
   storageRef = storage.ref();
 }
 
-export function registerVolunteer(age, email, password, firstName, lastName, interests, location, timeCommitment, timeFrame) {
-	firebase
+export function registerVolunteer(
+  age,
+  email,
+  password,
+  firstName,
+  lastName,
+  interests,
+  postalCode,
+  timeCommitment,
+  timeFrame,
+  school
+) {
+  firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       let user = userCredential.user;
 
-      user.sendEmailVerification().then(function() {
-		// Email sent.
-		}).catch(function(error) {
-		// An error happened.
-	  });
+      user.sendEmailVerification().catch(function (error) {
+        console.error(error.code, error.message);
+      });
 
-
-		user.updateProfile({
-		  displayName: firstName+" "+lastName,
-		}).then(function() {
-		  // Update successful.
-		}).catch(function(error) {
-		  // An error happened.
-		});
+      user
+        .updateProfile({
+          displayName: firstName + " " + lastName,
+        })
+        .catch(function (error) {
+          console.error(error.code, error.message);
+        });
 
       db.collection("volunteers")
         .doc(user.uid)
         .set({
           age: age,
           email: email,
-		  firstName: firstName,
-		  lastName: lastName,
+          firstName: firstName,
+          lastName: lastName,
           interests: interests,
-          location: location,
+          postalCode: postalCode,
           timeCommitment: timeCommitment,
-          timeFrame: timeFrame
+          timeFrame: timeFrame,
+          school: school,
+        })
+        .then(() => {
+          window.location = "/dashboard/";
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
     })
     .catch((error) => {
-      console.error(err.code, err.message);
+      console.error(error.code, error.message);
     });
 }
 
-export function registerOrganization(email, password, website, location, fields, description, logo, bg_img, phoneNumber) {
-	firebase
-	.auth()
-	.createUserWithEmailAndPassword(email, password)
-	.then((userCredential) => {
-		let user = userCredential.user;
+export function registerOrganization(
+  name,
+  email,
+  password,
+  website,
+  location,
+  fields,
+  description,
+  logo,
+  bg_img,
+  phoneNumber
+) {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      let user = userCredential.user;
 
-		user.sendEmailVerification().then(function() {
-			// Email sent.
-			}).catch(function(error) {
-			// An error happened.
-	  	});
+      user.sendEmailVerification().catch(function (error) {
+        console.error(error.code, error.message);
+      });
 
-		user.updateProfile({
-		  displayName: name,
-		}).then(function() {
-		  // Update successful.
-		}).catch(function(error) {
-		  // An error happened.
-		});
+      user
+        .updateProfile({
+          displayName: name,
+        })
+        .catch(function (error) {
+          console.error(error.code, error.message);
+        });
 
-		db.collection("organizations")
-			.doc(user.uid)
-			.set({
-				name: name,
-				email: email,
-				website: website,
-				location: location,
-				phone: phoneNumber
-			})
-			.then((docRef) => {
-				console.log("Document written with ID: ", docRef.id);
-			})
-			.catch((error) => {
-				console.error("Error adding document: ", error);
-			});
-		})
-		.catch((error) => {
-			console.error(err.code, err.message);
-		});
+      let promises = [];
 
-		var imagesRef = storageRef.child(name);
+      let logoName = "logo." + logo.type.split("/")[1];
+      let logoRef = storageRef.child(name + "/" + logoName);
+      promises.push(logoRef.put(logo));
 
-		var fileName = "logo"+logo.type.split("/")[1]
+      if (bg_img) {
+        let bgName = "background." + bg_img.type.split("/")[1];
+        let bgRef = storageRef.child(name + "/" + bgName);
+        promises.push(bgRef.put(bg_img));
+      }
 
-		var spaceRef = imagesRef.child(fileName)
+      promises.push(
+        db.collection("organizations").doc(user.uid).set({
+          name: name,
+          email: email,
+          website: website,
+          location: location,
+          phone: phoneNumber,
+          fields: fields,
+          description: description,
+        })
+      );
 
-		var path = spaceRef.fullPath;
-
-		var name = spaceRef.name;
-
-		var imagesRef = spaceRef.parent;
+      Promise.all(promises)
+        .then(() => {
+          window.location = "/our-opportunities/";
+        })
+        .catch((error) => {
+          console.error(error.code, error.message);
+        });
+    })
+    .catch((error) => {
+      console.error(error.code, error.message);
+    });
 }
 
-export function registerSchool(name, email, password, website, location, phoneNumber) {
-	firebase
-	.auth()
-	.createUserWithEmailAndPassword(email, password)
-	.then((userCredential) => {
-		let user = userCredential.user;
+export function registerSchool(
+  name,
+  email,
+  password,
+  website,
+  location,
+  phoneNumber,
+  logo,
+  bg_img
+) {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      let user = userCredential.user;
 
-		user.sendEmailVerification().then(function() {
-			// Email sent.
-			}).catch(function(error) {
-			// An error happened.
-	  	});
+      // user.sendEmailVerification().catch(function (error) {
+      //   console.error(error.code, error.message);
+      // });
 
-		user.updateProfile({
-		  displayName: name,
-		}).then(function() {
-		  // Update successful.
-		}).catch(function(error) {
-		  // An error happened.
-		});
+      user
+        .updateProfile({
+          displayName: name,
+        })
+        .catch(function (error) {
+          console.error(error.code, error.message);
+        });
 
-		db.collection("school")
-			.doc(user.uid)
-			.set({
-				name: name,
-				email: email,
-				website: website,
-				location: location,
-				phone: phoneNumber
-			})
-			.then((docRef) => {
-				console.log("Document written with ID: ", docRef.id);
-			})
-			.catch((error) => {
-				console.error("Error adding document: ", error);
-			});
-		})
-		.catch((error) => {
-			console.error(err.code, err.message);
-		});
+      let promises = [];
+
+      let logoName = "logo." + logo.type.split("/")[1];
+      let logoRef = storageRef.child(name + "/" + logoName);
+      promises.push(logoRef.put(logo));
+
+      if (bg_img) {
+        let bgName = "background." + bg_img.type.split("/")[1];
+        let bgRef = storageRef.child(name + "/" + bgName);
+        promises.push(bgRef.put(bg_img));
+      }
+
+      promises.push(
+        db.collection("school").doc(user.uid).set({
+          name: name,
+          email: email,
+          website: website,
+          location: location,
+          phone: phoneNumber,
+        })
+      );
+
+      Promise.all(promises)
+        .then(() => {
+          window.location = "/our-opportunities/";
+        })
+        .catch((error) => {
+          console.error(error.code, error.message);
+        });
+    })
+    .catch((error) => {
+      console.error(error.code, error.message);
+    });
 }
 
-
-export function login(email, password)
-{
-	firebase.auth().signInWithEmailAndPassword(email, password)
-	.then((userCredential) => {
-    // Signed in
-    var user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
+export function login(email, password) {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      console.error(error.code, error.message);
+    });
 }
 
-export function logout()
-{
-	firebase.auth().signOut().then(() => {
-  		// Sign-out successful.
-	}).catch((error) => {
-  		// An error happened.
-	});
+export function logout() {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
 }
 
 initializeInstance();
