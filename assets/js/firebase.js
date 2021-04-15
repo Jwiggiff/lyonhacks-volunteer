@@ -225,6 +225,8 @@ export function login(email, password) {
     })
     .catch((error) => {
       document
+        .querySelector("#loginForm .errormsg")?.remove();
+      document
         .querySelector("#loginForm .input-group:nth-child(3)")
         .insertAdjacentHTML(
           "afterend",
