@@ -186,14 +186,11 @@ function loadOurOpps() {
     //   )
     // );
 
-    let html = (
-      await Promise.all(
-        opps
-          .filter(
-            (opp) => opp.organization.id == firebase.auth().currentUser.uid
-          )
-          .map(async (opp) => {
-            return `
+    let html = await Promise.all(
+      opps
+        .filter((opp) => opp.organization.id == firebase.auth().currentUser.uid)
+        .map(async (opp) => {
+          return `
       <div class="opportunity">
       <img
         src="${await storageRef.child(opp.organization.logo).getDownloadURL()}"
@@ -206,14 +203,15 @@ function loadOurOpps() {
       <a href="/opportunities/more-info?id=${opp.id}">More info</a>
     </div>
       `;
-          })
-      )
+        })
     );
 
-    if(html.length > 0)
-    document.querySelector(".opportunity-grid").innerHTML = html.join("");
+    if (html.length > 0)
+      document.querySelector(".opportunity-grid").innerHTML = html.join("");
     else
-    document.querySelector(".opportunity-grid").innerHTML = `<p style="text-align: center">You have not created any opportunities yet.<br>Click the plus button above to add one.</p>`;
+      document.querySelector(
+        ".opportunity-grid"
+      ).innerHTML = `<p style="text-align: center">You have not created any opportunities yet.<br>Click the plus button above to add one.</p>`;
   });
 }
 
@@ -221,9 +219,10 @@ async function loadMoreInfoPage() {
   let id = new URLSearchParams(window.location.search).get("id");
   let data = (await getOpportunityById(id))[0];
 
-  document.querySelector("img.bg").src = await storageRef
-    .child(data.organization.bg_img)
-    .getDownloadURL();
+  if (data.organization.bg_img != "")
+    document.querySelector("img.bg").src = await storageRef
+      .child(data.organization.bg_img)
+      .getDownloadURL();
   document.querySelector("img.logo").src = await storageRef
     .child(data.organization.logo)
     .getDownloadURL();
