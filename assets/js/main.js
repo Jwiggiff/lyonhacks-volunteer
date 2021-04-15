@@ -11,11 +11,13 @@ import {
   getOpportunityById,
   getOrganizations,
   getSchools,
+  getVolunteer,
   getVolunteers,
   queryOpportunities,
 } from "./db.js";
 import * as orgActions from "./organizationActions.js";
 import * as schoolActions from "./schoolActions.js";
+import { loadMap } from "./map.js";
 
 function registerEvents() {
   const loginForm = document.getElementById("loginForm");
@@ -182,6 +184,38 @@ async function loadMoreInfoPage() {
   document.getElementById("contact").innerText = data.contact;
 }
 
+async function loadDashboard() {
+  getOpportunities().then(async (opps) => {
+    let postal_code = (await getVolunteer(firebase.auth().currentUser.uid))
+      .postalCode;
+
+    loadMap(opps, postal_code);
+
+    document.querySelector(".recommended .opportunity-list").innerHTML = (
+      await Promise.all(
+        opps.map(async (opp) => {
+          return `
+          <li class="opportunity">
+          <img
+            src="${await storageRef
+              .child(opp.organization.logo)
+              .getDownloadURL()}"
+            alt="${opp.organization.name}"
+          />
+          <h4>${opp.organization.name}</h4>
+          <p class="pos">${opp.position}</p>
+          <p class="addr">${opp.location}</p>
+          <p class="time">${opp.timeCommitment}</p>
+          <a href="/opportunities/more-info?id=${opp.id}">More info</a>
+        </li>
+      `;
+        })
+      )
+    ).join("");
+  });
+}
+
 registerEvents();
 if (window.location.pathname == "/opportunities/") loadOpps();
 if (window.location.pathname == "/opportunities/more-info/") loadMoreInfoPage();
+if (window.location.pathname == "/dashboard/") loadDashboard();

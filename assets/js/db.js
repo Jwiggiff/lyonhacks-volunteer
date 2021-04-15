@@ -29,6 +29,10 @@ export async function getVolunteers() {
   return volunteerData;
 }
 
+export async function getVolunteer(id) {
+  return (await db.collection("volunteers").doc(id).get()).data();
+}
+
 export async function getOpportunities() {
   return db
     .collectionGroup("opportunities")

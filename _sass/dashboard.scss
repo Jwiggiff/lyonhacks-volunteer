@@ -34,6 +34,7 @@ section.volunteer.dashboard {
 
   .map {
     grid-area: C;
+    height: calc(100vh - #{$header-height});
   }
 
   .opportunity-list {
