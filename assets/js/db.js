@@ -39,6 +39,8 @@ export async function getOrganizations() {
                     organizationData[doc.id]['opportunities'].push(opportunities.data())
                 })
             })
+
+            console.log('Hi')
         })
 
         return organizationData;
@@ -68,6 +70,38 @@ export async function getSchools() {
     })
 
     return schoolData
+}
+
+export async function getOpportunityById(id) {
+    // first check organizations collection for opportunities
+    db.collection('organizations').get().then((querySnapshot1) => {
+        querySnapshot1.forEach((doc) => {
+            db.collection('organizations').doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+                querySnapshot2.forEach((doc2) => {
+                    if(doc2.id === id){
+                        console.log(doc2.id)
+                        console.log(doc2.data())
+                        return doc2.data()
+                    }
+                })
+            })
+        })
+    })
+
+    // next check schools for opportunities
+    db.collection('schools').get().then((querySnapshot1) => {
+        querySnapshot1.forEach((doc) => {
+            db.collection('schools').doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+                querySnapshot2.forEach((doc2) => {
+                    if(doc2.id === id){
+                        console.log(doc2.id)
+                        console.log(doc2.data())
+                        return doc2.data()
+                    }
+                })
+            })
+        })
+    })
 }
 
 export async function queryOpportunities(query) {

@@ -141,7 +141,8 @@ function loadOpps() {
   // });
 
   getOrganizations().then((data) => {
-    console.log(Object.values(data).map(org => org.opportunities)[0]);
+    console.log(Object.values(data)[0]['opportunities'])
+    // console.log(Object.values(data).map(org => org.opportunities)[0]);
   });
 }
 

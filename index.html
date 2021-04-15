@@ -166,6 +166,59 @@ layout: home
     return list
   }
 
+  async function getOpportunityById(id) {
+    // first check organizations collection for opportunities
+    db.collection('organizations').get().then((querySnapshot1) => {
+      querySnapshot1.forEach((doc) => {
+        db.collection('organizations').doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+          querySnapshot2.forEach((doc2) => {
+            if(doc2.id === id){
+              console.log(doc2.id)
+              console.log(doc2.data())
+              return doc2.data()
+            }
+          })
+        })
+      })
+    })
+
+    // next check schools for opportunities
+    db.collection('schools').get().then((querySnapshot1) => {
+      querySnapshot1.forEach((doc) => {
+        db.collection('schools').doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+          querySnapshot2.forEach((doc2) => {
+            if(doc2.id === id){
+              console.log(doc2.id)
+              console.log(doc2.data())
+              return doc2.data()
+            }
+          })
+        })
+      })
+    })
+  }
+
+  getOpportunityById('DXVk5gtedHtyujh7TF39').then((data) => {
+    console.log(data)
+  })
+
+  function getComments(){
+    let comments = {}
+
+    db.collection('organizations').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        db.collection("organizations").doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+          querySnapshot2.forEach((opportunities) => {
+            db.collection("organizations").doc(doc.id)
+          })
+        })
+      })
+    })
+
+  }
+
+  // getComments()
+
   /* Uncomment to test functions */
   // console.log(getVolunteers())
   // console.log(getOrganizations())
