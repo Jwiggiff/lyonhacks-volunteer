@@ -101,5 +101,3 @@ export async function queryOpportunities(query) {
 
     return list
 }
-
-
