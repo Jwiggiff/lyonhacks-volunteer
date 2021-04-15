@@ -108,47 +108,45 @@ export async function getSchools() {
 }
 
 export async function getOpportunityById(id) {
+  let match;
+
   // first check organizations collection for opportunities
-  db.collection("organizations")
+  await db
+    .collection("organizations")
     .get()
     .then((querySnapshot1) => {
-      querySnapshot1.forEach((doc) => {
-        db.collection("organizations")
+      querySnapshot1.forEach(async (doc) => {
+        let test = await db
+          .collection("organizations")
           .doc(doc.id)
           .collection("opportunities")
-          .get()
-          .then((querySnapshot2) => {
-            querySnapshot2.forEach((doc2) => {
-              if (doc2.id === id) {
-                console.log(doc2.id);
-                console.log(doc2.data());
-                return doc2.data();
-              }
-            });
-          });
+          .doc(id)
+          .get();
+        if (test.exists) {
+          match = test.data();
+        }
       });
     });
 
   // next check schools for opportunities
-  db.collection("schools")
+  await db
+    .collection("schools")
     .get()
     .then((querySnapshot1) => {
-      querySnapshot1.forEach((doc) => {
-        db.collection("schools")
+      querySnapshot1.forEach(async (doc) => {
+        let test = await db
+          .collection("schools")
           .doc(doc.id)
           .collection("opportunities")
-          .get()
-          .then((querySnapshot2) => {
-            querySnapshot2.forEach((doc2) => {
-              if (doc2.id === id) {
-                console.log(doc2.id);
-                console.log(doc2.data());
-                return doc2.data();
-              }
-            });
-          });
+          .doc(id)
+          .get();
+        if (test.exists) {
+          match = test.data();
+        }
       });
     });
+
+  return match;
 }
 
 async function getComments() {
