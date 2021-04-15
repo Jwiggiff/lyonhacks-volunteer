@@ -70,12 +70,17 @@
     width: 2.5rem;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+  }
+
+  label[for="dropdown"] {
+    display: none;
   }
 
   .dropdown {
@@ -106,6 +111,10 @@
 
 .logged-in {
   .profileBtn {
+    display: block;
+  }
+
+  label[for="dropdown"] {
     display: block;
   }
 
