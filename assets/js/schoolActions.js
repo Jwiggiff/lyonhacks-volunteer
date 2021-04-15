@@ -1,14 +1,19 @@
 import {db} from "./firebase.js"
 
-function addExperience(description, location, name, visibility)
+function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, visibility)
 {
 	db.collection("schools")
         .doc(firebase.auth().currentUser.uid)
         .collection("opportunities")
         .add({
-          description: description,
+          position: position,
           location: location,
-          name: name,
+          timeFrame: timeFrame,
+          timeCommitment: timeCommitment,
+          requirements: requirements,
+          description: description,
+          contact: contact,
+          status: status,
           visibility: visibility
         })
         .catch((error) => {
@@ -17,16 +22,21 @@ function addExperience(description, location, name, visibility)
 }
 
 
-function editExperience(description, location, name, visibility, id)
+function editExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, visibility, id)
 {
 	db.collection("schools")
         .doc(firebase.auth().currentUser.uid)
         .collection("opportunities")
         .doc(id)
         .set({
-          description: description,
+          position: position,
           location: location,
-          name: name,
+          timeFrame: timeFrame,
+          timeCommitment: timeCommitment,
+          requirements: requirements,
+          description: description,
+          contact: contact,
+          status: status,
           visibility: visibility
         })
         .catch((error) => {
