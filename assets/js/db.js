@@ -124,6 +124,7 @@ export async function getOpportunityById(id) {
           .get();
         if (test.exists) {
           match = test.data();
+          match.organization = (await test.ref.parent.parent.get()).data();
         }
       });
     });
@@ -142,6 +143,7 @@ export async function getOpportunityById(id) {
           .get();
         if (test.exists) {
           match = test.data();
+          match.organization = (await test.ref.parent.parent.get()).data();
         }
       });
     });
