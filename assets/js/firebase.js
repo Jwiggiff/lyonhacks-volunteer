@@ -224,6 +224,7 @@ export function login(email, password) {
       else console.log("Something's wrong...");
     })
     .catch((error) => {
+      document.querySelector("#loginForm .input-group:nth-child(3)").insertAdjacentHTML("afterend", `<sub class="errormsg">The username or password is invalid. Please create an account or try again.</sub>`)
       console.error(error.code, error.message);
     });
 }
