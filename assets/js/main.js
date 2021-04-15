@@ -4,6 +4,7 @@ import {
   registerSchool,
   login,
   logout,
+  storageRef,
 } from "./firebase.js";
 import {
   getOpportunities,
@@ -137,8 +138,26 @@ function registerEvents() {
 }
 
 function loadOpps() {
-  getOpportunities().then((data) => {
-    console.log(data);
+  getOpportunities().then(async (opps) => {
+    document.querySelector(".opportunity-grid").innerHTML = (
+      await Promise.all(
+        opps.map(async (opp) => {
+          return `
+      <div class="opportunity">
+      <img
+        src="${await storageRef.child(opp.organization.logo).getDownloadURL()}"
+        alt="${opp.organization.name}"
+      />
+      <h4>${opp.organization.name}</h4>
+      <p class="pos">${opp.position}</p>
+      <p class="addr">${opp.location}</p>
+      <p class="time">${opp.timeCommitment}</p>
+      <a href="/more-info?id=${opp.id}">More info</a>
+    </div>
+      `;
+        })
+      )
+    ).join("");
   });
 }
 

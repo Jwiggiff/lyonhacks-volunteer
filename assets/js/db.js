@@ -37,7 +37,8 @@ export async function getOpportunities() {
       return await Promise.all(
         querySnapshot.docs.map(async (doc) => {
           let data = doc.data();
-          data.organization = (await doc.ref.parent.parent.get()).get("name");
+          data.organization = (await doc.ref.parent.parent.get()).data();
+          data.id = doc.id;
           return data;
         })
       );
