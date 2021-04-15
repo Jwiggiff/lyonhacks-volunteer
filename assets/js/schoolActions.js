@@ -1,6 +1,6 @@
 import {db} from "./firebase.js"
 
-function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, visibility)
+export function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, visibility)
 {
 	db.collection("schools")
         .doc(firebase.auth().currentUser.uid)
@@ -22,7 +22,7 @@ function addExperience(position, location, timeFrame, timeCommitment, requiremen
 }
 
 
-function editExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, visibility, id)
+export function editExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, visibility, id)
 {
 	db.collection("schools")
         .doc(firebase.auth().currentUser.uid)
@@ -45,7 +45,7 @@ function editExperience(position, location, timeFrame, timeCommitment, requireme
 }
 
 
-function deleteExperience(id)
+export function deleteExperience(id)
 {
 	db.collection("schools")
         .doc(firebase.auth().currentUser.uid)

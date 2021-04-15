@@ -1,6 +1,6 @@
 import {db} from "./firebase.js"
 
-function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status) //status is for whether the opportunity is ongoing or archived
+export function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status) //status is for whether the opportunity is ongoing or archived
 {
 	db.collection("organizations")
         .doc(firebase.auth().currentUser.uid)
@@ -21,7 +21,7 @@ function addExperience(position, location, timeFrame, timeCommitment, requiremen
 }
 
 
-function editExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, id)
+export function editExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status, id)
 {
 	db.collection("organizations")
         .doc(firebase.auth().currentUser.uid)
@@ -43,7 +43,7 @@ function editExperience(position, location, timeFrame, timeCommitment, requireme
 }
 
 
-function deleteExperience(id)
+export function deleteExperience(id)
 {
 	db.collection("organizations")
         .doc(firebase.auth().currentUser.uid)
