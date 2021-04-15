@@ -297,6 +297,13 @@ firebase.auth().onAuthStateChanged(async (user) => {
         )
         .getDownloadURL();
     }
+
+    document.querySelector(".site-header .dropdown").insertAdjacentHTML(
+      "afterbegin",
+      `<li>
+    <b>${user.displayName}</b>
+  </li>`
+    );
   } else {
     if (loggedInOnly.includes(window.location.pathname)) window.location = "/";
   }
