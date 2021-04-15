@@ -1,6 +1,6 @@
 import {db} from "./firebase.js"
 
-export function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact, status) //status is for whether the opportunity is ongoing or archived
+export function addExperience(position, location, timeFrame, timeCommitment, requirements, description, contact)
 {
 	db.collection("organizations")
         .doc(firebase.auth().currentUser.uid)
@@ -13,7 +13,6 @@ export function addExperience(position, location, timeFrame, timeCommitment, req
           requirements: requirements,
           description: description,
           contact: contact,
-          status: status
         })
         .catch((error) => {
           console.error("Error adding document: ", error);

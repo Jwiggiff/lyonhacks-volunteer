@@ -48,6 +48,8 @@
   box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   padding: 4rem 4rem 2rem 4rem;
+  max-height: 90%;
+  overflow: auto;
 
   .close {
     text-decoration: none;

@@ -1,25 +1,8 @@
-<div class="modal" id="loginModal">
+<div class="modal" id="{{ include.id }}">
   <a class="overlay" href="#"></a>
   <div class="modal-content">
     <a href="#" class="close">&times;</a>
 
-    <form id="loginForm">
-      <img src="{{ site.logo }}" alt="Volunteerism">
-      <div class="input-group">
-        <input type="text" id="email" placeholder="Email" />
-      </div>
-      <div class="input-group">
-        <input type="password" id="password" placeholder="Password" />
-      </div>
-      <div class="input-group">
-        <button class="btn">Login</button>
-      </div>
-      <p>Don't have an account?</p>
-      <div class="input-group horizontal">
-        <a href="{{ "/volunteer-register/" | relative_url }}">Create a Volunteer Account</a>
-        <a href="{{ "/organization-register/" | relative_url }}">Create an Organization Account</a>
-        <a href="{{ "/school-register/" | relative_url }}">Create a School Account</a>
-      </div>
-    </form>
+    {%- include {{ include.test }} -%}
   </div>
 </div>

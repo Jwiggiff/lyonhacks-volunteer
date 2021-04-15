@@ -5,6 +5,14 @@ import {
   login,
   logout,
 } from "./firebase.js";
+import {
+  getOrganizations,
+  getSchools,
+  getVolunteers,
+  queryOpportunities,
+} from "./db.js";
+import * as orgActions from "./organizationActions.js";
+import * as schoolActions from "./schoolActions.js";
 
 function registerEvents() {
   const loginForm = document.getElementById("loginForm");
@@ -12,6 +20,7 @@ function registerEvents() {
   const orgForm = document.getElementById("orgRegisterForm");
   const schoolForm = document.getElementById("schoolRegisterForm");
   const signOutBtn = document.getElementById("signOutBtn");
+  const addOppForm = document.getElementById("addOppForm");
 
   loginForm?.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -99,9 +108,39 @@ function registerEvents() {
       bg_img
     );
   });
-  signOutBtn.addEventListener("click", () => {
+  signOutBtn?.addEventListener("click", () => {
     logout();
+  });
+  addOppForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let position = e.target.querySelector("#position").value;
+    let location = e.target.querySelector("#location").value;
+    let timeFrame = e.target.querySelector("#time_frame").value;
+    let timeCommitment = e.target.querySelector("#time_commitment").value;
+    let requirements = e.target.querySelector("#requirements").value;
+    let description = e.target.querySelector("#description").value;
+    let contact = e.target.querySelector("#contact").value;
+
+    orgActions.addExperience(
+      position,
+      location,
+      timeFrame,
+      timeCommitment,
+      requirements,
+      description,
+      contact
+    );
+
+    window.location.hash = "";
+  });
+}
+
+function loadOpps() {
+  getOrganizations().then((data) => {
+    // data.map((org) => org.opportunities);
+    //TODO: create html for each ooportunity
   });
 }
 
 registerEvents();
+if (window.location.pathname == "/opportunities/") loadOpps();
