@@ -135,6 +135,11 @@
     padding: 0;
   }
 
+  .site-nav .dropdown {
+    position: static;
+    text-align: center;
+  }
+
   label[for="nav-trigger"] {
     display: block;
     z-index: 2;
@@ -158,13 +163,13 @@
     top: 100%;
     left: 0;
     width: 100%;
-    height: 0;
+    max-height: 0;
     overflow: hidden;
     background-color: white;
     transition: all 0.2s ease;
   }
   input:checked ~ .site-nav {
-    height: 150px;
+    max-height: 500px;
     padding: 1rem 0;
   }
 }
