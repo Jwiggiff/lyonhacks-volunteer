@@ -8,6 +8,7 @@ import {
 } from "./firebase.js";
 import {
   getOpportunities,
+  getOpportunityById,
   getOrganizations,
   getSchools,
   getVolunteers,
@@ -152,7 +153,7 @@ function loadOpps() {
       <p class="pos">${opp.position}</p>
       <p class="addr">${opp.location}</p>
       <p class="time">${opp.timeCommitment}</p>
-      <a href="/more-info?id=${opp.id}">More info</a>
+      <a href="more-info?id=${opp.id}">More info</a>
     </div>
       `;
         })
@@ -161,5 +162,26 @@ function loadOpps() {
   });
 }
 
+async function loadMoreInfoPage() {
+  let id = new URLSearchParams(window.location.search).get("id");
+  let data = (await getOpportunityById(id))[0];
+
+  document.querySelector("img.bg").src = await storageRef
+    .child(data.organization.bg_img)
+    .getDownloadURL();
+  document.querySelector("img.logo").src = await storageRef
+    .child(data.organization.logo)
+    .getDownloadURL();
+  document.getElementById("name").innerText = data.organization.name;
+  document.getElementById("position").innerText = data.position;
+  document.getElementById("location").innerText = data.location;
+  document.getElementById("time_frame").innerText = data.timeFrame;
+  document.getElementById("time_commitment").innerText = data.timeCommitment;
+  document.getElementById("requirements").innerText = data.requirements;
+  document.getElementById("description").innerText = data.description;
+  document.getElementById("contact").innerText = data.contact;
+}
+
 registerEvents();
 if (window.location.pathname == "/opportunities/") loadOpps();
+if (window.location.pathname == "/opportunities/more-info/") loadMoreInfoPage();
