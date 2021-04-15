@@ -108,47 +108,7 @@ export async function getSchools() {
 }
 
 export async function getOpportunityById(id) {
-  let match;
-
-  // first check organizations collection for opportunities
-  await db
-    .collection("organizations")
-    .get()
-    .then((querySnapshot1) => {
-      querySnapshot1.forEach(async (doc) => {
-        let test = await db
-          .collection("organizations")
-          .doc(doc.id)
-          .collection("opportunities")
-          .doc(id)
-          .get();
-        if (test.exists) {
-          match = test.data();
-          match.organization = (await test.ref.parent.parent.get()).data();
-        }
-      });
-    });
-
-  // next check schools for opportunities
-  await db
-    .collection("schools")
-    .get()
-    .then((querySnapshot1) => {
-      querySnapshot1.forEach(async (doc) => {
-        let test = await db
-          .collection("schools")
-          .doc(doc.id)
-          .collection("opportunities")
-          .doc(id)
-          .get();
-        if (test.exists) {
-          match = test.data();
-          match.organization = (await test.ref.parent.parent.get()).data();
-        }
-      });
-    });
-
-  return match;
+  return (await getOpportunities()).filter((op) => op.id == id);
 }
 
 async function getComments() {
