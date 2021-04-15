@@ -224,8 +224,7 @@ export function login(email, password) {
       else console.log("Something's wrong...");
     })
     .catch((error) => {
-      document
-        .querySelector("#loginForm .errormsg")?.remove();
+      document.querySelector("#loginForm .errormsg")?.remove();
       document
         .querySelector("#loginForm .input-group:nth-child(3)")
         .insertAdjacentHTML(
@@ -250,6 +249,8 @@ export function logout() {
 
 initializeInstance();
 
+let loggedInOnly = ["/our-opportunities/", "/dashboard/"];
+
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user) {
     let uid = user.uid;
@@ -270,6 +271,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
       if (userType == "volunteer") window.location = "/dashboard/";
       else window.location = "/our-opportunities/";
   } else {
-    if (window.location.pathname != "/") window.location = "/";
+    if (loggedInOnly.includes(window.location.pathname)) window.location = "/";
   }
 });
