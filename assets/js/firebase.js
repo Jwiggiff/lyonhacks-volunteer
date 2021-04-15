@@ -161,9 +161,9 @@ export function registerSchool(
     .then((userCredential) => {
       let user = userCredential.user;
 
-      // user.sendEmailVerification().catch(function (error) {
-      //   console.error(error.code, error.message);
-      // });
+      user.sendEmailVerification().catch(function (error) {
+        console.error(error.code, error.message);
+      });
 
       user
         .updateProfile({
@@ -216,12 +216,8 @@ export function login(email, password) {
       let uid = userCredential.user.uid;
 
       if ((await db.collection("volunteers").doc(uid).get()).exists)
-        window.userType = "volunteer";
-      else if ((await db.collection("organizations").doc(uid).get()).exists)
-        window.userType = "organization";
-      else if ((await db.collection("schools").doc(uid).get()).exists)
-        window.userType = "school";
-      else console.log("Something's wrong...");
+        window.location = "/dashboard/";
+      else window.location = "/our-opportunities/";
     })
     .catch((error) => {
       document.querySelector("#loginForm .errormsg")?.remove();
@@ -240,7 +236,8 @@ export function logout() {
     .auth()
     .signOut()
     .then(() => {
-      // Sign-out successful.
+      if (window.location.pathname == "/") window.location.reload();
+      elsewindow.location = "/";
     })
     .catch((error) => {
       // An error happened.
@@ -259,6 +256,12 @@ firebase.auth().onAuthStateChanged(async (user) => {
 
     if ((await db.collection("volunteers").doc(uid).get()).exists) {
       window.userType = "volunteer";
+      document.querySelector(".site-header .dropdown").insertAdjacentHTML(
+        "afterbegin",
+        `<li>
+      <a href="/dashboard/">Dashboard</a>
+    </li>`
+      );
     } else if ((await db.collection("organizations").doc(uid).get()).exists) {
       window.userType = "organization";
     } else if ((await db.collection("schools").doc(uid).get()).exists) {
@@ -267,9 +270,9 @@ firebase.auth().onAuthStateChanged(async (user) => {
       console.log("Something's wrong...");
     }
 
-    if (window.location.pathname == "/")
-      if (userType == "volunteer") window.location = "/dashboard/";
-      else window.location = "/our-opportunities/";
+    if (userType != "volunteer")
+      document.querySelector("a[href='/opportunities/']").href =
+        "/our-opportunities/";
   } else {
     if (loggedInOnly.includes(window.location.pathname)) window.location = "/";
   }
