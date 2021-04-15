@@ -186,7 +186,7 @@ function loadOurOpps() {
     //   )
     // );
 
-    document.querySelector(".opportunity-grid").innerHTML = (
+    let html = (
       await Promise.all(
         opps
           .filter(
@@ -208,7 +208,12 @@ function loadOurOpps() {
       `;
           })
       )
-    ).join("");
+    );
+
+    if(html.length > 0)
+    document.querySelector(".opportunity-grid").innerHTML = html.join("");
+    else
+    document.querySelector(".opportunity-grid").innerHTML = `<p style="text-align: center">You have not created any opportunities yet.<br>Click the plus button above to add one.</p>`;
   });
 }
 
