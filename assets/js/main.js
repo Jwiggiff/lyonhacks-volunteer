@@ -6,7 +6,6 @@ import {
   logout,
 } from "./firebase.js";
 import {
-  getOpportunities,
   getOrganizations,
   getSchools,
   getVolunteers,
