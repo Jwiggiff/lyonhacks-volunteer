@@ -66,6 +66,15 @@
     cursor: pointer;
   }
 
+.delete-profile {
+    place-self: center;
+    width: 25%;
+    padding: 1rem;
+    font-size: 5em;
+    cursor: pointer;
+    background: #F92472;
+  }
+
 .errormsg {
   color: red;
   margin-top: 1rem;
