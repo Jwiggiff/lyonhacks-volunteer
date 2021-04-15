@@ -104,6 +104,49 @@ export async function getOpportunityById(id) {
     })
 }
 
+async function getComments(){
+
+    let comments = {}
+
+    db.collection('organizations').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            db.collection("organizations").doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+                querySnapshot2.forEach((opportunities) => {
+                    db.collection("organizations").doc(doc.id).collection('opportunities').doc(opportunities.id).collection('comments').get().then((querySnapshot3) => {
+                        querySnapshot3.forEach((comment) => {
+                            comments[doc.id] = {}
+                            comments[doc.id]['type'] = 'organization'
+                            comments[doc.id]['data'] = doc.data()
+                            comments[doc.id]['opportunity'] = opportunities.data()
+                            comments[doc.id]['comment'] = comment.data()
+                        })
+                    })
+                })
+            })
+        })
+    })
+
+    db.collection('schools').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            db.collection("schools").doc(doc.id).collection('opportunities').get().then((querySnapshot2) => {
+                querySnapshot2.forEach((opportunities) => {
+                    db.collection("schools").doc(doc.id).collection('opportunities').doc(opportunities.id).collection('comments').get().then((querySnapshot3) => {
+                        querySnapshot3.forEach((comment) => {
+                            comments[doc.id] = {}
+                            comments[doc.id]['type'] = 'school'
+                            comments[doc.id]['data'] = doc.data()
+                            comments[doc.id]['opportunity'] = opportunities.data()
+                            comments[doc.id]['comment'] = comment.data()
+                        })
+                    })
+                })
+            })
+        })
+    })
+
+    return comments
+}
+
 export async function queryOpportunities(query) {
     return db.collection('organizations').get().then((querySnapshot) => {
         let list = {}
