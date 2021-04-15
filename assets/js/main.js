@@ -10,6 +10,7 @@ import {
   getOpportunities,
   getOpportunityById,
   getOrganizations,
+  getOrgOpportunities,
   getSchools,
   getVolunteer,
   getVolunteers,
@@ -126,15 +127,28 @@ function registerEvents() {
     let description = e.target.querySelector("#description").value;
     let contact = e.target.querySelector("#contact").value;
 
-    orgActions.addExperience(
-      position,
-      location,
-      timeFrame,
-      timeCommitment,
-      requirements,
-      description,
-      contact
-    );
+    if (userType == "organization")
+      orgActions.addExperience(
+        position,
+        location,
+        timeFrame,
+        timeCommitment,
+        requirements,
+        description,
+        contact
+      );
+    else
+      schoolActions.addExperience(
+        position,
+        location,
+        timeFrame,
+        timeCommitment,
+        requirements,
+        description,
+        contact,
+        "open",
+        "public"
+      );
 
     window.location.hash = "";
   });
@@ -159,6 +173,40 @@ function loadOpps() {
     </div>
       `;
         })
+      )
+    ).join("");
+  });
+}
+
+function loadOurOpps() {
+  getOpportunities().then(async (opps) => {
+    // console.log(
+    //   opps.filter(
+    //     (opp) => opp.organization.id == firebase.auth().currentUser.uid
+    //   )
+    // );
+
+    document.querySelector(".opportunity-grid").innerHTML = (
+      await Promise.all(
+        opps
+          .filter(
+            (opp) => opp.organization.id == firebase.auth().currentUser.uid
+          )
+          .map(async (opp) => {
+            return `
+      <div class="opportunity">
+      <img
+        src="${await storageRef.child(opp.organization.logo).getDownloadURL()}"
+        alt="${opp.organization.name}"
+      />
+      <h4>${opp.organization.name}</h4>
+      <p class="pos">${opp.position}</p>
+      <p class="addr">${opp.location}</p>
+      <p class="time">${opp.timeCommitment}</p>
+      <a href="/opportunities/more-info?id=${opp.id}">More info</a>
+    </div>
+      `;
+          })
       )
     ).join("");
   });
@@ -219,3 +267,4 @@ registerEvents();
 if (window.location.pathname == "/opportunities/") loadOpps();
 if (window.location.pathname == "/opportunities/more-info/") loadMoreInfoPage();
 if (window.location.pathname == "/dashboard/") loadDashboard();
+if (window.location.pathname == "/our-opportunities/") loadOurOpps();

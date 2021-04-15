@@ -41,12 +41,34 @@ export async function getOpportunities() {
       return await Promise.all(
         querySnapshot.docs.map(async (doc) => {
           let data = doc.data();
-          data.organization = (await doc.ref.parent.parent.get()).data();
+          let org = await doc.ref.parent.parent.get();
+          data.organization = org.data();
+          data.organization.id = org.id;
           data.id = doc.id;
           return data;
         })
       );
     });
+}
+
+export async function getOrgOpportunities(orgID) {
+  if ((await db.collection("organizations").doc(orgID).get()).exists) {
+    return db
+      .collection("organizations")
+      .doc(orgID)
+      .get()
+      .then((docSnapshot) => {
+        return docSnapshot;
+      });
+  } else {
+    return db
+      .collection("schools")
+      .doc(orgID)
+      .get()
+      .then((docSnapshot) => {
+        return docSnapshot;
+      });
+  }
 }
 
 export async function getOrganizations() {
