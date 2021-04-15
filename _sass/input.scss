@@ -60,9 +60,11 @@
 
 .errormsg {
   color: red;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: inline-block;
   word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 200px;
-  line-height: 1;
+  line-height: 2;
 }
