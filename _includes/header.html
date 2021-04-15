@@ -20,5 +20,21 @@
     <a href="{{ "/about/" | relative_url }}" class="nav-link mobile">About</a>
     <a href="{{ "/opportunities/" | relative_url }}" class="nav-link">Opportunities</a>
     <a id="loginBtn" href="#loginModal" class="nav-link btn">Login/Register</a>
+
+    <input type="checkbox" id="dropdown" hidden>
+    <label for="dropdown">
+      <span class="profileBtn">
+        <img src="{{ "/assets/img/profile.png" | relative_url }}" alt="Profile">
+      </span>
+    </label>
+    <ul class="dropdown">
+      <li>
+        <a href="#">Profile Settings</a>
+      </li>
+      <hr>
+      <li>
+        <a id="signOutBtn" href="#">Sign Out</a>
+      </li>
+    </ul>
   </nav>
 </header>

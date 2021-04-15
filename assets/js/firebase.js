@@ -269,5 +269,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
     if (window.location.pathname == "/")
       if (userType == "volunteer") window.location = "/dashboard/";
       else window.location = "/our-opportunities/";
+  } else {
+    if (window.location.pathname != "/") window.location = "/";
   }
 });

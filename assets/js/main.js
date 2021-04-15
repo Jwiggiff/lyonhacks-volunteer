@@ -11,6 +11,7 @@ function registerEvents() {
   const volunteerForm = document.getElementById("volunteerRegisterForm");
   const orgForm = document.getElementById("orgRegisterForm");
   const schoolForm = document.getElementById("schoolRegisterForm");
+  const signOutBtn = document.getElementById("signOutBtn");
 
   loginForm?.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -97,6 +98,9 @@ function registerEvents() {
       logo,
       bg_img
     );
+  });
+  signOutBtn.addEventListener("click", () => {
+    logout();
   });
 }
 
