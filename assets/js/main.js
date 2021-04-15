@@ -6,6 +6,7 @@ import {
   logout,
 } from "./firebase.js";
 import {
+  getOpportunities,
   getOrganizations,
   getSchools,
   getVolunteers,
@@ -136,13 +137,8 @@ function registerEvents() {
 }
 
 function loadOpps() {
-  // getOpportunities().then((data) => {
-  //   console.log(data);
-  // });
-
-  getOrganizations().then((data) => {
-    console.log(Object.values(data)[0]['opportunities'])
-    // console.log(Object.values(data).map(org => org.opportunities)[0]);
+  getOpportunities().then((data) => {
+    console.log(data);
   });
 }
 

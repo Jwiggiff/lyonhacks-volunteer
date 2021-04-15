@@ -114,22 +114,28 @@ export function registerOrganization(
       let logoRef = storageRef.child(name + "/" + logoName);
       promises.push(logoRef.put(logo));
 
+      let bgRef;
       if (bg_img) {
         let bgName = "background." + bg_img.type.split("/")[1];
-        let bgRef = storageRef.child(name + "/" + bgName);
+        bgRef = storageRef.child(name + "/" + bgName);
         promises.push(bgRef.put(bg_img));
       }
 
       promises.push(
-        db.collection("organizations").doc(user.uid).set({
-          name: name,
-          email: email,
-          website: website,
-          location: location,
-          phone: phoneNumber,
-          fields: fields,
-          description: description,
-        })
+        db
+          .collection("organizations")
+          .doc(user.uid)
+          .set({
+            name: name,
+            email: email,
+            website: website,
+            location: location,
+            phone: phoneNumber,
+            fields: fields,
+            description: description,
+            logo: logoRef.fullPath,
+            bg_img: bgRef ? bgRef.fullPath : "",
+          })
       );
 
       Promise.all(promises)
@@ -270,9 +276,21 @@ firebase.auth().onAuthStateChanged(async (user) => {
       console.log("Something's wrong...");
     }
 
-    if (userType != "volunteer")
+    if (userType != "volunteer") {
       document.querySelector("a[href='/opportunities/']").href =
         "/our-opportunities/";
+
+      document.querySelector(".profileBtn img").src = await storageRef
+        .child(
+          (
+            await db
+              .collection(userType + "s")
+              .doc(uid)
+              .get()
+          ).data()["logo"]
+        )
+        .getDownloadURL();
+    }
   } else {
     if (loggedInOnly.includes(window.location.pathname)) window.location = "/";
   }
