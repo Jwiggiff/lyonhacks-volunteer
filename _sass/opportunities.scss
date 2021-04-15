@@ -1,0 +1,64 @@
+section.opportunities {
+  .searchbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: relative;
+
+    form {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      &::before {
+        content: "";
+        background-image: url("/assets/img/search.svg");
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        left: 0.5rem;
+      }
+    }
+
+    #searchInput {
+      padding: 0.5rem 1rem 0.5rem 2rem;
+    }
+  }
+}
+
+.opportunity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  padding: 3rem;
+
+  .opportunity {
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    background-image: linear-gradient(to bottom, #ffb74a, #4aff7d, #6ad2ff);
+    background-size: 100vw calc(100vh - #{$header-height});
+    background-position: bottom;
+    background-attachment: fixed;
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 4rem;
+      object-fit: cover;
+    }
+
+    h4 {
+      font-size: 1.25em;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
