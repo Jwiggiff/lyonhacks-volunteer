@@ -185,20 +185,26 @@ export function registerSchool(
       let logoRef = storageRef.child(name + "/" + logoName);
       promises.push(logoRef.put(logo));
 
+      let bgRef;
       if (bg_img) {
         let bgName = "background." + bg_img.type.split("/")[1];
-        let bgRef = storageRef.child(name + "/" + bgName);
+        bgRef = storageRef.child(name + "/" + bgName);
         promises.push(bgRef.put(bg_img));
       }
 
       promises.push(
-        db.collection("schools").doc(user.uid).set({
-          name: name,
-          email: email,
-          website: website,
-          location: location,
-          phone: phoneNumber,
-        })
+        db
+          .collection("schools")
+          .doc(user.uid)
+          .set({
+            name: name,
+            email: email,
+            website: website,
+            location: location,
+            phone: phoneNumber,
+            logo: logoRef.fullPath,
+            bg_img: bgRef ? bgRef.fullPath : "",
+          })
       );
 
       Promise.all(promises)
