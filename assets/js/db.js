@@ -1,7 +1,7 @@
 import { db } from './firebase.js'
 
 export async function getVolunteers() {
-    return db.collection("Volunteer").get().then((querySnapshot) => {
+    return db.collection("volunteers").get().then((querySnapshot) => {
         let volunteerData = {}
 
         querySnapshot.forEach((doc) => {
@@ -10,7 +10,7 @@ export async function getVolunteers() {
             volunteerData[doc.id]['data'] = doc.data()
             volunteerData[doc.id]['experience'] = []
 
-            db.collection("Volunteer").doc(doc.id).collection('experience').get().then((snapshot) => {
+            db.collection("volunteers").doc(doc.id).collection('experience').get().then((snapshot) => {
                 snapshot.forEach((experiences) => {
                     volunteerData[doc.id]['experience'].push(experiences.data())
                 })
@@ -25,7 +25,7 @@ export async function getVolunteers() {
 
 export async function getOrganizations() {
 
-    return db.collection('Organization').get().then((querySnapshot) => {
+    return db.collection('organizations').get().then((querySnapshot) => {
         let organizationData = {}
 
         querySnapshot.forEach((doc) => {
@@ -34,7 +34,7 @@ export async function getOrganizations() {
             organizationData[doc.id]['data'] = doc.data()
             organizationData[doc.id]['opportunities'] = []
 
-            db.collection("Organization").doc(doc.id).collection('opportunity').get().then((snapshot) => {
+            db.collection("organizations").doc(doc.id).collection('opportunities').get().then((snapshot) => {
                 snapshot.forEach((opportunities) => {
                     organizationData[doc.id]['opportunities'].push(opportunities.data())
                 })
@@ -49,7 +49,7 @@ export async function getOrganizations() {
 
 export async function getSchools() {
 
-    return db.collection('School').get().then((querySnapshot) => {
+    return db.collection('schools').get().then((querySnapshot) => {
         let schoolData = {}
 
         querySnapshot.forEach((doc) => {
@@ -57,7 +57,7 @@ export async function getSchools() {
             schoolData[doc.id]['data'] = doc.data()
             schoolData[doc.id]['opportunities'] = []
 
-            db.collection("School").doc(doc.id).collection('opportunity').get().then((snapshot) => {
+            db.collection("schools").doc(doc.id).collection('opportunities').get().then((snapshot) => {
                 snapshot.forEach((opportunities) => {
                     schoolData[doc.id]['opportunities'].push(opportunities.data())
                 })
@@ -71,11 +71,11 @@ export async function getSchools() {
 }
 
 export async function queryOpportunities(query) {
-    return db.collection('Organization').get().then((querySnapshot) => {
+    return db.collection('organizations').get().then((querySnapshot) => {
         let list = {}
 
         querySnapshot.forEach((doc) => {
-            db.collection("Organization").doc(doc.id).collection('opportunity').where("tags", "array-contains", query).get().then((snapshot) => {
+            db.collection("organizations").doc(doc.id).collection('opportunities').where("tags", "array-contains", query).get().then((snapshot) => {
                 snapshot.forEach((opportunities) => {
                     list[doc.id] = {}
                     list[doc.id]['data'] = doc.data()

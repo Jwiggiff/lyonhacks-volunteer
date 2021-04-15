@@ -136,9 +136,12 @@ function registerEvents() {
 }
 
 function loadOpps() {
+  // getOpportunities().then((data) => {
+  //   console.log(data);
+  // });
+
   getOrganizations().then((data) => {
-    // data.map((org) => org.opportunities);
-    //TODO: create html for each ooportunity
+    console.log(Object.values(data).map(org => org.opportunities)[0]);
   });
 }
 
