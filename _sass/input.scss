@@ -58,6 +58,14 @@
   }
 }
 
+.profileButton {
+    place-self: center;
+    width: 50%;
+    padding: 1rem;
+    font-size: 10em;
+    cursor: pointer;
+  }
+
 .errormsg {
   color: red;
   margin-top: 1rem;
